@@ -86,9 +86,12 @@ select * from tbusuario where login = "admin" and senha = "admin";
 select * from tbusuario;
 
 alter table tbusuario add column perfil varchar(20) not null;
+alter table tbusuario add column biuser varchar(15) not null after usuario;
 
-update tbusuario set perfil = 'normal' where idusuer = 4; 
-update tbusuario set perfil = 'admin' where idusuer = 1;
+update tbusuario set biuser = '100231289339M' where idusuer = 1; 
+update tbusuario set biuser = '100121289229B' where idusuer = 2;
+update tbusuario set biuser = '100331288653B' where idusuer = 3;
+update tbusuario set biuser = '100521280986J' where idusuer = 4;
 
 
 

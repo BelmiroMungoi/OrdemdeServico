@@ -12,3 +12,9 @@ O sistema tera algumas restricoes:
     - admin
     - normal
     
+Os dados desse programa ficarao armazenados num banco de dados MySQL. Foi usada a versao 5.1.49 do JDBC para a conexao do Java com MySQL.
+
+Para ter acesso:
+  - Usuario: admin
+  - Senha: admin
+    

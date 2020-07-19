@@ -46,6 +46,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
         jMenuHelp = new javax.swing.JMenu();
         jMenuItemSobre = new javax.swing.JMenuItem();
         jMenuOp = new javax.swing.JMenu();
+        jMenuItemOutra = new javax.swing.JMenuItem();
         jMenuItemSair = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -147,6 +148,15 @@ public class TelaPrincipal extends javax.swing.JFrame {
 
         jMenuOp.setText("Opcões");
 
+        jMenuItemOutra.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_O, java.awt.event.InputEvent.ALT_MASK));
+        jMenuItemOutra.setText("Usar outra conta");
+        jMenuItemOutra.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItemOutraActionPerformed(evt);
+            }
+        });
+        jMenuOp.add(jMenuItemOutra);
+
         jMenuItemSair.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F4, java.awt.event.InputEvent.ALT_MASK));
         jMenuItemSair.setText("Sair");
         jMenuItemSair.addActionListener(new java.awt.event.ActionListener() {
@@ -160,12 +170,14 @@ public class TelaPrincipal extends javax.swing.JFrame {
 
         setJMenuBar(jMenuBar1);
 
-        setSize(new java.awt.Dimension(950, 575));
+        setSize(new java.awt.Dimension(950, 581));
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
-        // TODO add your handling code here:
+        TelaCliente client = new TelaCliente();
+        client.setVisible(true);
+        jDesktop.add(client);
     }//GEN-LAST:event_jMenuItem1ActionPerformed
 
     private void formWindowActivated(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowActivated
@@ -191,6 +203,12 @@ public class TelaPrincipal extends javax.swing.JFrame {
         user.setVisible(true);
         jDesktop.add(user);
     }//GEN-LAST:event_jMenuItemUserActionPerformed
+
+    private void jMenuItemOutraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemOutraActionPerformed
+        TelaLogin tela = new TelaLogin();
+        tela.setVisible(true);
+        dispose();
+    }//GEN-LAST:event_jMenuItemOutraActionPerformed
 
     /**
      * @param args the command line arguments
@@ -239,6 +257,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JMenuItem jMenuItem4;
+    private javax.swing.JMenuItem jMenuItemOutra;
     private javax.swing.JMenuItem jMenuItemSair;
     private javax.swing.JMenuItem jMenuItemSobre;
     public static javax.swing.JMenuItem jMenuItemUser;

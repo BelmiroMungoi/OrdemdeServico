@@ -38,7 +38,37 @@ public class TelaUsuario extends javax.swing.JInternalFrame {
             JOptionPane.showMessageDialog(null, "Nao foi possivel adicionar usuario\n"+e.getMessage());
         }
     }
-
+    
+    private void deletar() {
+        String sql = "delete from tbusuario where idusuer = ?";
+        try {
+            pst = conexao.prepareStatement(sql);
+            pst.setString(1, jTextFieldID.getText());
+            pst.execute();
+            JOptionPane.showMessageDialog(null, "Usuario Excluido com sucesso");
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Nao foi possivel excluir:\n"+ e.getMessage());
+        }
+    }
+    
+    private void editar(){
+        String sql = "update tbusuario set usuario = ?,biuser = ?,cell = ?,login = ?,senha = ?, perfil = ? where idusuer = ?";
+        try {
+            pst = conexao.prepareStatement(sql);
+            pst.setString(1, jTextFieldNome.getText());
+            pst.setString(2, jTextFieldBI.getText());
+            pst.setString(3, jTextFieldCell.getText());
+            pst.setString(4, jTextFieldLogin.getText());
+            pst.setString(5, jTextFieldSenha.getText());
+            pst.setString(6, jComboBoxPerfil.getSelectedItem().toString());
+            pst.setString(7, jTextFieldID.getText());
+            pst.execute();
+            JOptionPane.showMessageDialog(null, "Dados editados com sucesso");
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Nao foi possivel editar\n" + e.getMessage());
+        }
+    }
+    
     private void pesquisar() {
         String sql = "select * from tbusuario where idusuer = ?";
         try {
@@ -97,6 +127,7 @@ public class TelaUsuario extends javax.swing.JInternalFrame {
         jButtonProcurar = new javax.swing.JButton();
         jLabel8 = new javax.swing.JLabel();
         jButtonSalvar = new javax.swing.JButton();
+        jButtonCancel = new javax.swing.JButton();
 
         setClosable(true);
         setIconifiable(true);
@@ -150,6 +181,11 @@ public class TelaUsuario extends javax.swing.JInternalFrame {
         jButtonApagar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/deleteUser.png"))); // NOI18N
         jButtonApagar.setToolTipText("Apagar Usuário");
         jButtonApagar.setEnabled(false);
+        jButtonApagar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonApagarActionPerformed(evt);
+            }
+        });
 
         jButtonEditar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/editUser.png"))); // NOI18N
         jButtonEditar.setToolTipText("Editar Usuário");
@@ -172,10 +208,17 @@ public class TelaUsuario extends javax.swing.JInternalFrame {
 
         jButtonSalvar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/saveAll.png"))); // NOI18N
         jButtonSalvar.setEnabled(false);
-        jButtonSalvar.setPreferredSize(new java.awt.Dimension(126, 112));
         jButtonSalvar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButtonSalvarActionPerformed(evt);
+            }
+        });
+
+        jButtonCancel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/cancel.png"))); // NOI18N
+        jButtonCancel.setToolTipText("Cancelar");
+        jButtonCancel.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonCancelActionPerformed(evt);
             }
         });
 
@@ -186,10 +229,6 @@ public class TelaUsuario extends javax.swing.JInternalFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGap(25, 25, 25)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jButtonSalvar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(111, 111, 111)
-                        .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 212, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel1)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -220,13 +259,21 @@ public class TelaUsuario extends javax.swing.JInternalFrame {
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                             .addComponent(jTextFieldCell)))
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jButtonNovo)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jButtonNovo)
+                                .addGap(25, 25, 25)
+                                .addComponent(jButtonApagar)
+                                .addGap(25, 25, 25)
+                                .addComponent(jButtonEditar))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jButtonSalvar)
+                                .addGap(54, 54, 54)
+                                .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 212, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addGap(25, 25, 25)
-                        .addComponent(jButtonApagar)
-                        .addGap(25, 25, 25)
-                        .addComponent(jButtonEditar)
-                        .addGap(25, 25, 25)
-                        .addComponent(jButtonProcurar)))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jButtonCancel)
+                            .addComponent(jButtonProcurar))))
                 .addContainerGap(54, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -270,7 +317,9 @@ public class TelaUsuario extends javax.swing.JInternalFrame {
                         .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 74, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(6, 6, 6)
-                        .addComponent(jButtonSalvar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jButtonCancel)
+                            .addComponent(jButtonSalvar))))
                 .addContainerGap(21, Short.MAX_VALUE))
         );
 
@@ -307,6 +356,7 @@ public class TelaUsuario extends javax.swing.JInternalFrame {
         jTextFieldSenha.setEnabled(true);        
         jComboBoxPerfil.setEnabled(true);
         jButtonSalvar.setEnabled(true);
+        jTextFieldID.setEnabled(false);
         jButtonApagar.setEnabled(false);
         jButtonNovo.setEnabled(false);
         jButtonEditar.setEnabled(false);
@@ -365,8 +415,10 @@ public class TelaUsuario extends javax.swing.JInternalFrame {
             jButtonSalvar.setEnabled(false);
             jButtonApagar.setEnabled(false);
             jButtonEditar.setEnabled(false);
+            jButtonNovo.setEnabled(true);
+            jTextFieldID.setEnabled(true);
         } else {
-            adicionar();
+            editar();
             jTextFieldID.setText("");
             jTextFieldNome.setText("");
             jTextFieldCell.setText("");
@@ -381,13 +433,61 @@ public class TelaUsuario extends javax.swing.JInternalFrame {
             jComboBoxPerfil.setEnabled(false);        
             jButtonSalvar.setEnabled(false);
             jButtonApagar.setEnabled(false);
-            jButtonEditar.setEnabled(false);             
+            jButtonEditar.setEnabled(false);
+            jButtonNovo.setEnabled(true);
+            jTextFieldID.setEnabled(true);
         }
     }//GEN-LAST:event_jButtonSalvarActionPerformed
 
+    private void jButtonCancelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonCancelActionPerformed
+        jTextFieldID.setText("");
+        jTextFieldNome.setText("");
+        jTextFieldCell.setText("");
+        jTextFieldBI.setText("");
+        jTextFieldLogin.setText("");
+        jTextFieldSenha.setText(""); 
+        jTextFieldNome.setEnabled(false);
+        jTextFieldCell.setEnabled(false);
+        jTextFieldBI.setEnabled(false);
+        jTextFieldLogin.setEnabled(false);
+        jTextFieldSenha.setEnabled(false);
+        jComboBoxPerfil.setEnabled(false);        
+        jButtonSalvar.setEnabled(false);
+        jButtonApagar.setEnabled(false);
+        jButtonEditar.setEnabled(false);
+        jButtonNovo.setEnabled(true);
+        jButtonProcurar.setEnabled(true);
+        jTextFieldID.setEnabled(true);
+    }//GEN-LAST:event_jButtonCancelActionPerformed
 
+    private void jButtonApagarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonApagarActionPerformed
+        int del = JOptionPane.showConfirmDialog(null, "Deseja deletar o usuario?", "Atencao", JOptionPane.YES_NO_OPTION);
+        if (del == JOptionPane.YES_OPTION) {
+            deletar();
+            jTextFieldID.setText("");
+            jTextFieldNome.setText("");
+            jTextFieldCell.setText("");
+            jTextFieldBI.setText("");
+            jTextFieldLogin.setText("");
+            jTextFieldSenha.setText(""); 
+            jTextFieldNome.setEnabled(false);
+            jTextFieldCell.setEnabled(false);
+            jTextFieldBI.setEnabled(false);
+            jTextFieldLogin.setEnabled(false);
+            jTextFieldSenha.setEnabled(false);
+            jComboBoxPerfil.setEnabled(false);        
+            jButtonSalvar.setEnabled(false);
+            jButtonApagar.setEnabled(false);
+            jButtonEditar.setEnabled(false);
+            jButtonNovo.setEnabled(true);
+            jButtonProcurar.setEnabled(true);
+            jTextFieldID.setEnabled(true);
+        }
+     
+    }//GEN-LAST:event_jButtonApagarActionPerformed
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButtonApagar;
+    private javax.swing.JButton jButtonCancel;
     private javax.swing.JButton jButtonEditar;
     private javax.swing.JButton jButtonNovo;
     private javax.swing.JButton jButtonProcurar;

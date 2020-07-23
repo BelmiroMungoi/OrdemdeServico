@@ -8,7 +8,7 @@ Esse sistema fará o cadastro de:
 O sistema tera algumas restricoes:
   - Os clientes näo poderäo aceder os dados do usuario ou emitir a ordem de servico;
   - Os usuarios poderäo aceder a todos os dados e funcionalidades do sistema.
-  - Existiram dois tipos de perfil
+  - Existiram dois tipos de perfil:
     - admin
     - normal
     
